@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value);
 }
 
 
@@ -53,8 +53,11 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  if (date.getFullYear() % 4 !== 0) { return false; } if
+  (date.getFullYear() % 100 !== 0) { return true; } if
+  (date.getFullYear() % 400 !== 0) { return false; }
+  return true;
 }
 
 
@@ -73,10 +76,28 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  let time = endDate - startDate;
+  // console.log(startDate, endDate);
+  const hours = Math.floor(time / 3600000);
+  time -= hours * 3600000;
+  // console.log(time);
+  const mins = Math.floor(time / 60000);
+  time -= mins * 60000;
+  // console.log(time);
+  const secs = Math.floor(time / 1000);
+  time -= secs * 1000;
+  // console.log(time);
+  const millisecs = time;
+  // console.log(millisecs);
+  // return `${(`00${hours}`).slice(-2)}:${(`00${mins}`).slice(-2)}:$
+  // {(`00${secs}`).slice(-2)}.${(`000${millisecs.toString()}`).slice(-3)}`;
+  // console.log(`${`00${hours}`.slice(-2)}:${`00${mins}`.slice(-2)}:${`00${secs}`.slice(-2)}.
+  // ${`000${millisecs}`.slice(-3)}`);
+  return `${`00${hours}`.slice(-2)}:${`00${mins}`.slice(-2)}:${`00${secs}`.slice(-2)}.${`000${millisecs}`.slice(-3)}`;
 }
 
+// timeSpanToString(new Date(2000,1,1,10,0,0), new Date(2000,1,1,15,20,10,453));
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock
