@@ -32,9 +32,17 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
+  // const r =
+  // /[{][0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}[}]/g;
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // console.log(r.test('{21EC2020-3AEA-4069-A2DD-08002B30309D}'));
+  // return r;
   throw new Error('Not implemented');
 }
-
 
 /**
  * Returns the regexp that matches all the strings from first column
@@ -55,6 +63,8 @@ function getRegexForGuid() {
  */
 function getRegexForPitSpot() {
   throw new Error('Not implemented');
+  // [re]*[s][p][i|o|a][t][e]*
+  // [re]*[s]*[p][i|o|a][t][e]*\w*
 }
 
 
