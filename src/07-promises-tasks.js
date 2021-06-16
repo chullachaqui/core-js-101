@@ -59,14 +59,16 @@ function willYouMarryMe(isPositiveAnswer) {
  *
  */
 function processAllPromises(array) {
-  const resolves = [];
-  for (let i = 0; i < array.length; i += 1) {
-    resolves.push(i);
-  }
-  return new Promise((resolve) => {
-    resolve(resolves);
-  });
+  // const resolves = [];
+  // for (let i = 0; i < array.length; i += 1) {
+  //   resolves.push(i);
+  // }
+  // return new Promise((resolve) => {
+  //   resolve(resolves);
+  // });
+  // whaaaat kurwa przeszło to testy ale wyrzucilo w chu pomijanych bledow
   // throw new Error('Not implemented');
+  return Promise.all(array);
 }
 // const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)]
 // const p = processAllPromises(promises);
@@ -93,8 +95,8 @@ function processAllPromises(array) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -115,6 +117,7 @@ function getFastestPromise(/* array */) {
  *
  */
 function chainPromises(/* array, action */) {
+  // return Promise.resolve(array.reduce(action));
   throw new Error('Not implemented');
 }
 
