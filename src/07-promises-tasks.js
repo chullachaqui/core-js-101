@@ -28,10 +28,20 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((resolve, reject) => {
+    if (isPositiveAnswer) { resolve('Hooray!!! She said "Yes"!'); }
+    if (isPositiveAnswer === false) { resolve('Oh no, she said "No".'); }
+    if (typeof isPositiveAnswer !== 'boolean') { reject(new Error('Wrong parameter is passed! Ask her again.')); }
+  });
 }
 
+// const p1 = willYouMarryMe(true);
+// p1.then(answer => console.log(answer));
+// const p2 = willYouMarryMe(false);
+// p2.then(answer => console.log(answer));
+// const p3 = willYouMarryMe();
+// p3.then(answer => console.log(answer)).catch((error) => console.log(error.message))
 
 /**
  * Return Promise object that should be resolved with array containing plain values.
@@ -48,9 +58,21 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  const resolves = [];
+  for (let i = 0; i < array.length; i += 1) {
+    resolves.push(i);
+  }
+  return new Promise((resolve) => {
+    resolve(resolves);
+  });
+  // throw new Error('Not implemented');
 }
+// const promises = [Promise.resolve(1), Promise.resolve(3), Promise.resolve(12)]
+// const p = processAllPromises(promises);
+// p.then((res) => {
+//   console.log(res);// => [1, 2, 3]
+// })
 
 /**
  * Return Promise object that should be resolved with value received from

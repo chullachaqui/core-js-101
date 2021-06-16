@@ -63,10 +63,15 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...coeffs) {
+  return (x) => {
+    let y = 0;
+    [...coeffs].reverse().forEach((coeff, i) => { y += coeff * x ** i; });
+    return y;
+  };
 }
 
+// console.log(getPolynom(2,3,5));
 
 /**
  * Memoizes passed function and returns function
@@ -82,11 +87,23 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const cache = {};
+  return (arg) => {
+    if (cache[arg]) {
+      return cache[arg];
+    }
+    cache[arg] = func(arg);
+    return cache[arg];
+  };
 }
-
-
+// const memoizer = memoize(() => Math.random());
+// console.log(memoizer());
+// console.log(memoizer());
+// console.log(memoizer());
+// console.log(memoizer());
+// console.log(memoizer());
+// console.log(memoizer());
 /**
  * Returns the function trying to call the passed function and if it throws,
  * retrying it specified number of attempts.
@@ -102,10 +119,39 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return (arg) => {
+    let attempt = 1;
+    while (attempt < attempts) {
+      try {
+        func(arg);
+      } catch (e) {
+        attempt += 1;
+      }
+    }
+    return func(arg);
+  };
+  // let retries = 0;
+  // return (...args) => {
+  //   let result;
+  //   while (!result && retries < attempts) {
+  //     try {
+  //       result = func(...args);
+  //     } catch (e) {
+  //       retries += 1;
+  //     }
+  //   }
+  //   return result;
+  // };
 }
+// throw new Error('Not implemented');
 
+// let attempt = 0;
+// const retryer = retry(() => {
+//   if (++attempt % 2) throw new Error('test');
+//   else return attempt;
+// }, 2);
+// console.log(retryer()); // => 2
 
 /**
  * Returns the logging wrapper for the specified method,
@@ -130,8 +176,14 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return (...args) => {
+    const args2 = [...args].map((el) => JSON.stringify(el)).join(',');
+    logFunc(`${func.name}(${args2}) starts`);
+    const result = func(...args);
+    logFunc(`${func.name}(${args2}) ends`);
+    return result;
+  };
 }
 
 
@@ -148,8 +200,8 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => fn(...args1, ...args2);
 }
 
 
@@ -170,11 +222,17 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  // return () => { startFrom += 1; return startFrom; };
-  throw new Error('Not implemented');
-}
 
+function getIdGeneratorFunction(startFrom) {
+  // return () => { startFrom += 1; return startFrom; };
+  let i = startFrom;
+
+  return () => {
+    const result = i;
+    i += 1;
+    return result;
+  };
+}
 
 module.exports = {
   getComposition,
